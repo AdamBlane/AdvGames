@@ -21,5 +21,14 @@
     <ClCompile Include="xXpongXx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="screens.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screen0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screen1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

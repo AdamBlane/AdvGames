@@ -150,6 +150,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="screen0.cpp" />
+    <ClCompile Include="screen1.cpp" />
+    <ClCompile Include="screens.cpp" />
     <ClCompile Include="xXpongXx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

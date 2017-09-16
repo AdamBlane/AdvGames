@@ -1,3 +1,5 @@
 ﻿  xXpongXx.cpp
+c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(142): warning C4715: 'screen_0::Run': not all control paths return a value
+c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(201): warning C4715: 'screen_1::Run': not all control paths return a value
   xXpongXx.vcxproj -> C:\Users\40161070\Documents\GitHub\AdvGames\x64\Debug\xXpongXx.exe
   xXpongXx.vcxproj -> C:\Users\40161070\Documents\GitHub\AdvGames\x64\Debug\xXpongXx.pdb (Partial PDB)
