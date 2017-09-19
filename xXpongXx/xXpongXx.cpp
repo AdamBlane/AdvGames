@@ -67,8 +67,8 @@ Text killCount, gameTime, playerLives, highScoreTxt;
 int killCounter, kill10, threshold, playerLivesCount, enemyTick, highScoreCount;
 float gameTimeTotal, playerSpeed;
 bool playerShieldActive, controllerConnected, beamPlaying = false, pPressed = false;
-SoundBuffer explosion1Buffer, explosion2Buffer, explosion3Buffer, powerupBuffer, beamBodyBuffer, beamEndBuffer;
-Sound explosion1Sound, explosion2Sound, explosion3Sound, powerupSound, beamBodySound, beamEndSound;
+SoundBuffer explosionBuffer;
+Sound explosionSound;
 Music bgMusic;
 
 int controller = 0;
@@ -167,20 +167,12 @@ void LoadTextures()
 		throw std::invalid_argument("Error loading F10 tex");
 	if (!enemy3Tex.loadFromFile("res/img/C5.png"))
 		throw std::invalid_argument("Error loading C5 tex");
-	/*if (!powerupSpeed.loadFromFile("res/img/speedy.png"))
-		throw std::invalid_argument("Error loading speedy tex");
-	if (!powerupSpeedActive.loadFromFile("res/img/speedyActive.png"))
-		throw std::invalid_argument("Error loading speedy active tex");
-	if (!powerupRepair.loadFromFile("res/img/game/repair.png"))
-		throw std::invalid_argument("Error loading repair tex");
-	if (!powerupRepairActive.loadFromFile("res/img/game/repairActive.png"))
-		throw std::invalid_argument("Error loading repair active tex");
-	if (!powerupShield.loadFromFile("res/img/game/shield.png"))
-		throw std::invalid_argument("Error loading shield tex");
-	if (!powerupShieldActive.loadFromFile("res/img/game/shieldActive.png"))
-		throw std::invalid_argument("Error loading shield active tex");
-	if (!playerShielded.loadFromFile("res/img/spaceShips/playerShielded.png"))
-		throw std::invalid_argument("Error loading player shielded tex");*/
+	if (!powerupSpeed.loadFromFile("res/img/speedup.png"))
+		throw std::invalid_argument("Error loading speedup tex");
+	if (!powerupSpeedActive.loadFromFile("res/img/speedupActive.png"))
+		throw std::invalid_argument("Error loading speed up active tex");
+
+
 	// Assign textures to sprites
 	gameBg.setTexture(gameBgTex);
 	gameBg.setScale(res.x / startBg.getLocalBounds().width, res.y / startBg.getLocalBounds().height);
@@ -189,61 +181,11 @@ void LoadTextures()
 	player.move(res.x / 2 - player.getLocalBounds().width / 2, res.y - player.getLocalBounds().height * 2);
 
 	//// AUDIO
-	//if (!explosion1Buffer.loadFromFile("res/audio/explosion1.wav"))
-	//	throw std::invalid_argument("Error loading explosion 1 wav");
-	//if (!explosion2Buffer.loadFromFile("res/audio/explosion2.wav"))
-	//	throw std::invalid_argument("Error loading explosion 2 wav");
-	//if (!explosion3Buffer.loadFromFile("res/audio/explosion3.wav"))
-	//	throw std::invalid_argument("Error loading explosion 3 wav");
-	//if (!powerupBuffer.loadFromFile("res/audio/powerup.wav"))
-	//	throw std::invalid_argument("Error loading powerup wav");
-	//if (!bgMusic.openFromFile("res/audio/background.wav"))
-	//	throw std::invalid_argument("Error loading bg music wav");
-	//if (!beamBodyBuffer.loadFromFile("res/audio/beamBody.wav"))
-	//	throw std::invalid_argument("Error loading beamBody wav");
-	//if (!beamEndBuffer.loadFromFile("res/audio/beamEnd.wav"))
-	//	throw std::invalid_argument("Error loading beamEnd wav");
+	if (!explosionBuffer.loadFromFile("res/img/0477.wav"))
+		throw std::invalid_argument("Error loading explosion 1 wav");
 	//// Set to sounds
-	//explosion1Sound.setBuffer(explosion1Buffer);
-	//explosion1Sound.setVolume(70);
-	//explosion2Sound.setBuffer(explosion2Buffer);
-	//explosion2Sound.setVolume(70);
-	//explosion3Sound.setBuffer(explosion3Buffer);
-	//explosion3Sound.setVolume(70);
-	//beamBodySound.setBuffer(beamBodyBuffer);
-	//beamBodySound.setLoop(true);
-	//beamEndSound.setBuffer(beamEndBuffer);
-	//powerupSound.setBuffer(powerupBuffer);
-	//bgMusic.setLoop(true);
-
-	//// HUD ELEMENTS
-
-	// Load font
-	//if (!gameFont.loadFromFile("res/Roboto-Black.ttf"))
-	//	throw std::invalid_argument("Error loading font");
-	// Setup text 
-	//killCount.setFont(gameFont);
-	killCount.setString(" Kills: 0");
-	killCount.setCharacterSize(24);
-	killCount.setFillColor(Color::White);
-	//gameTime.setFont(gameFont);
-	gameTime.setString("0.00");
-	gameTime.setCharacterSize(24);
-	gameTime.setFillColor(Color::White);
-	gameTime.setPosition(res.x / 3, 0.0f);
-	//playerLives.setFont(gameFont);
-	playerLives.setString("Lives: 3");
-	playerLives.setCharacterSize(24);
-	playerLives.setFillColor(Color::White);
-	playerLives.setPosition(res.x / 2, 0.0f);
-	//highScoreTxt.setFont(gameFont);
-	highScoreTxt.setCharacterSize(24);
-	highScoreTxt.setFillColor(Color::White);
-	highScoreTxt.setPosition(res.x - 200, 0.0f);
-	//highScoreStartText.setFont(gameFont);
-	highScoreStartText.setCharacterSize(30);
-	highScoreStartText.setFillColor(Color::Black);
-	highScoreStartText.setPosition(200.0f, 350.0f);
+	explosionSound.setBuffer(explosionBuffer);
+	explosionSound.setVolume(70);
 }
 
 // Reset counters
@@ -367,26 +309,15 @@ void SetTextures(int index)
 
 }
 
-// Move player within window bounds on resize
-void ResetPlayer()
-{
-	// Only move if out of bounds due to resize
-	if (player.getPosition().x > res.x || player.getPosition().x < 0)
-		player.setPosition(res.x / 2 - player.getLocalBounds().width / 2, res.y - player.getLocalBounds().height);
-	if (player.getPosition().y > res.y || player.getPosition().y < 0)
-		player.setPosition(res.x / 2 - player.getLocalBounds().width / 2, res.y - player.getLocalBounds().height);
-}
-
-
 // Random chance of spawning a powerup, triggered every kill
 void PowerupChance()
 {
 	// 1 in 3 chance of powerup on kill
-	int chance = rand() % 9 + 1;
+	int chance = rand() % 20 + 1;
 	switch (chance)
 	{
 		// Speedy 
-	case 3:
+	case 5:
 	{
 		// Create a new powerup
 		PowerUp powerup;
@@ -396,46 +327,6 @@ void PowerupChance()
 		powerup.effect = 1;
 		// Set the sprite's texture
 		powerupSprite.setTexture(powerupSpeed);
-		// Assign to powerup
-		powerup.sprite = powerupSprite;
-		// Randomise start posision, set 
-		int startPos = rand() % res.y + 0;
-		float toMove = (float)startPos;
-		powerup.sprite.move(toMove, -100.0f);
-		// Add to list to be rendered
-		powerUps.push_back(powerup);
-	}
-	break;
-	case 6:
-	{
-		// Create a new powerup
-		PowerUp powerup;
-		// Its sprite
-		Sprite powerupSprite;
-		// Set repair effect
-		powerup.effect = 2;
-		// Set the sprite's texture
-		powerupSprite.setTexture(powerupRepair);
-		// Assign to powerup
-		powerup.sprite = powerupSprite;
-		// Randomise start posision, set 
-		int startPos = rand() % res.y + 0;
-		float toMove = (float)startPos;
-		powerup.sprite.move(toMove, -100.0f);
-		// Add to list to be rendered
-		powerUps.push_back(powerup);
-	}
-	break;
-	case 9:
-	{
-		// Create a new powerup
-		PowerUp powerup;
-		// Its sprite
-		Sprite powerupSprite;
-		// Set shield effect
-		powerup.effect = 3;
-		// Set the sprite's texture
-		powerupSprite.setTexture(powerupShield);
 		// Assign to powerup
 		powerup.sprite = powerupSprite;
 		// Randomise start posision, set 
@@ -462,17 +353,6 @@ void PoweredUp(int effect)
 		// Increase player speed
 		playerSpeed += 100.0f;
 	}
-	break;
-	case 2:
-	{
-		// Give player an extra life
-		playerLivesCount++;
-	}
-	break;
-	case 3:
-		// Activate player shield
-		playerShieldActive = true;
-		break;
 	default: break;
 	}
 
@@ -595,16 +475,7 @@ void Collisions()
 		{
 			// Destroy enemy ship
 			itE = fasterEnemySprites.erase(itE);
-			// If shield is active, lose shield
-			if (playerShieldActive)
-			{
-				playerShieldActive = false;
-				player.setTexture(playerTex);
-			}
-			else {
-				// Otherwise lose a life
-				playerLivesCount--;
-			}
+			playerLivesCount--;
 		}
 		// If no collision
 		else
@@ -637,7 +508,7 @@ void Collisions()
 				// Chance of powerup drop
 				PowerupChance();
 				// Play explosion sound effect
-				explosion1Sound.play();
+				explosionSound.play();
 			}
 			else
 				itE++;
@@ -658,7 +529,7 @@ void Collisions()
 				// Chance of powerup
 				PowerupChance();
 				// Play explosion sound effect
-				explosion2Sound.play();
+				explosionSound.play();
 			}
 			else
 				itE++;
@@ -679,7 +550,7 @@ void Collisions()
 				// Chance of powerup
 				PowerupChance();
 				// Play explosion sound effect
-				explosion3Sound.play();
+				explosionSound.play();
 			}
 			else
 				itE++;
@@ -714,7 +585,6 @@ void Collisions()
 
 			if (pu.effect != 0)
 				// Play powerup pickup sound
-				powerupSound.play();
 			// Reset effect so as not to trigger each frame of collision
 			pu.effect = 0;
 
@@ -920,17 +790,11 @@ void Update()
 			if (!beamPlaying)
 			{
 				// Play sound
-				beamBodySound.play();
 				beamPlaying = true;
 			}
 		}
 		if (!Keyboard::isKeyPressed(Keyboard::Space))
 		{
-			// Reset beam flag
-			beamBodySound.stop();
-			if (beamPlaying)
-				// Play tail end sound
-				beamEndSound.play();
 			beamPlaying = false;
 
 		}
@@ -1143,11 +1007,6 @@ void Render(RenderWindow &window)
 			// Background and player
 			window.draw(gameBg);
 			window.draw(player);
-			// Draw text hud elements
-			window.draw(killCount);
-			window.draw(gameTime);
-			window.draw(playerLives);
-			window.draw(highScoreTxt);
 			// Draw bullets
 			for (Sprite & s : bulletSprites)
 				window.draw(s);
@@ -1208,44 +1067,25 @@ int main()
 		}
 		if (closeWin)
 			window.close();
-		// Toggle fullscreen
+		// Toggle fullscreen 
 		if (event.type == Event::KeyReleased)
 		{
-			if (event.key.code == Keyboard::Key::F)
-			{
-				fullscreen = !fullscreen;
-				window.create(VideoMode(res.x, res.y), "", (fullscreen ? sf::Style::Fullscreen : sf::Style::Resize | sf::Style::Close));
-				window.setView(view);
-				// In game
-				if (curScreen == 2)
-					ResetPlayer();
-			}
 			if (event.key.code == Keyboard::Key::Num1)
 			{
 
 				window.create(VideoMode(800.0f, 600.0f), "", sf::Style::Resize | sf::Style::Close);
 				window.setView(view);
-				// In game
-				if (curScreen == 2)
-					ResetPlayer();
 			}
 			if (event.key.code == Keyboard::Key::Num2)
 			{
 				window.create(VideoMode(1024.0f, 745.0f), "");
 				window.setView(view);
-				// In game
-				if (curScreen == 2)
-					ResetPlayer();
 
 			}
 			if (event.key.code == Keyboard::Key::Num3)
 			{
 				window.create(VideoMode(1280.0f, 800.0f),"");
 				window.setView(view);
-				// In game
-				if (curScreen == 2)
-					ResetPlayer();
-
 			}
 
 		}
