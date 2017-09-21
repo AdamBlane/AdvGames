@@ -26,12 +26,8 @@ Vector2u res;
 // Tracks which screen is currently active
 int curScreen = 0;
 
-// ERROR SCREEN for default (if curScreen doesn't work)
-Sprite errorBg;
-Texture errorBgTex;
-
 // START SCREEN sprites and textures for bg and buttons
-Sprite startBg, startBtn, settingsBtn, exitBtn;
+Sprite startBg, startButton, settingsButton, exitButton;
 Texture startBgTex, startBtnTex, startBtnActiveTex, settingsBtnTex, settingsBtnActiveTex, exitBtnTex, exitBtnActiveTex;
 std::list<Sprite> startSprites;
 Text highScoreStartText;
@@ -62,8 +58,7 @@ std::list<Sprite> slowEnemySprites;
 std::list<Sprite> fastEnemySprites;
 std::list<Sprite> fasterEnemySprites;
 std::list<PowerUp> powerUps;
-Font gameFont;
-Text killCount, gameTime, playerLives, highScoreTxt;
+Text  highScoreTxt;
 int killCounter, kill10, threshold, playerLivesCount, enemyTick, highScoreCount;
 float gameTimeTotal, playerSpeed;
 bool playerShieldActive, controllerConnected, beamPlaying = false, pPressed = false;
@@ -76,13 +71,7 @@ int controller = 0;
 // Loads from file all textures for all screens, assigns to sprites
 void LoadTextures()
 {
-	//// ERROR SCREEN
-	//if (!errorBgTex.loadFromFile("res/img/error.png"))
-	//	throw std::invalid_argument("Error loading error screen :p");
-
-	//errorBg.setTexture(errorBgTex);
-
-	//// START SCREEN 
+	// Start screen
 	if (!startBgTex.loadFromFile("res/img/background1.png"))
 		throw std::invalid_argument("Error loading start button tex");
 	if (!startBtnTex.loadFromFile("res/img/Startbutton.png"))
@@ -98,26 +87,25 @@ void LoadTextures()
 	if (!exitBtnActiveTex.loadFromFile("res/img/ExitActive.png"))
 		throw std::invalid_argument("Error loading exit btn active tex");
 
-	//// Assign textures to sprites
+	// Assign textures to sprites
 	startBg.setTexture(startBgTex);
-	startBtn.setTexture(startBtnActiveTex);
-	settingsBtn.setTexture(settingsBtnTex);
-	exitBtn.setTexture(exitBtnTex);
+	startButton.setTexture(startBtnActiveTex);
+	settingsButton.setTexture(settingsBtnTex);
+	exitButton.setTexture(exitBtnTex);
 	// Set positions
 	startBg.setScale(res.x / startBg.getLocalBounds().width, res.y / startBg.getLocalBounds().height);
-	startBtn.setPosition(res.x / 2 - startBtn.getLocalBounds().width / 2, 5);
-	settingsBtn.setPosition(res.x / 2 - settingsBtn.getGlobalBounds().width / 2, res.y - exitBtn.getLocalBounds().height * 2);
-	exitBtn.setPosition(res.x / 2 - exitBtn.getLocalBounds().width / 2, res.y - exitBtn.getLocalBounds().height / 1.15);
+	startButton.setPosition(res.x / 2 - startButton.getLocalBounds().width / 2, 5);
+	settingsButton.setPosition(res.x / 2 - settingsButton.getGlobalBounds().width / 2, res.y - exitButton.getLocalBounds().height * 2);
+	exitButton.setPosition(res.x / 2 - exitButton.getLocalBounds().width / 2, res.y - exitButton.getLocalBounds().height / 1.15);
 	// Add to list to be rendered
 	startSprites.push_back(startBg);
-	startSprites.push_back(startBtn);
-	startSprites.push_back(settingsBtn);
-	startSprites.push_back(exitBtn);
+	startSprites.push_back(startButton);
+	startSprites.push_back(settingsButton);
+	startSprites.push_back(exitButton);
 
-	//// Set currently active button to start
 	currentlyActive = 0;
 
-	//// SETTINGS SCREEN 
+	// SETTINGS SCREEN 
 	if (!settingsBgTex.loadFromFile("res/img/background1.png"))
 		throw std::invalid_argument("Error loading settings screen bg tex");
 	if (!backActiveTex.loadFromFile("res/img/backActive.png"))
@@ -127,7 +115,7 @@ void LoadTextures()
 	settingsBg.setTexture(settingsBgTex);
 	settingsBg.setScale(res.x / startBg.getLocalBounds().width, res.y / startBg.getLocalBounds().height);
 	backBtn.setTexture(backActiveTex);
-	backBtn.setPosition(res.x - exitBtn.getLocalBounds().width, res.y - exitBtn.getLocalBounds().height / 1.15);
+	backBtn.setPosition(res.x - exitButton.getLocalBounds().width, res.y - exitButton.getLocalBounds().height / 1.15);
 	settingsSprites.push_back(backBtn);
 
 	//// PAUSE SCREEN
@@ -149,8 +137,8 @@ void LoadTextures()
 	resumeBtn.setTexture(resumeBtnActiveTex);
 	endgameBtn.setTexture(endgameBtnTex);
 	// Set positions
-	resumeBtn.setPosition(res.x / 2 - startBtn.getLocalBounds().width / 2, res.y / 4);
-	endgameBtn.setPosition(res.x / 2 - exitBtn.getLocalBounds().width / 2, res.y - exitBtn.getLocalBounds().height );
+	resumeBtn.setPosition(res.x / 2 - startButton.getLocalBounds().width / 2, res.y / 4);
+	endgameBtn.setPosition(res.x / 2 - exitButton.getLocalBounds().width / 2, res.y - exitButton.getLocalBounds().height );
 	//// Add to list
 	pauseSprites.push_back(resumeBtn);
 	pauseSprites.push_back(endgameBtn);
@@ -182,7 +170,7 @@ void LoadTextures()
 
 	//// AUDIO
 	if (!explosionBuffer.loadFromFile("res/img/0477.wav"))
-		throw std::invalid_argument("Error loading explosion 1 wav");
+		throw std::invalid_argument("Error loading screem wav");
 	//// Set to sounds
 	explosionSound.setBuffer(explosionBuffer);
 	explosionSound.setVolume(70);
@@ -200,10 +188,6 @@ void StartGame()
 	playerSpeed = 500.0f;
 	playerShieldActive = false;
 	paused = false;
-	// Reset HUD text
-	killCount.setString(" Kills: 0");
-	gameTime.setString("0");
-	playerLives.setString("Lives: 3");
 	// Load high score
 	highScoreFileR.open("res/highScore.txt");
 	highScoreFileR >> highScoreCount;
@@ -243,20 +227,20 @@ void SetTextures(int index)
 	case 0:
 	{
 		// Reset all button textures
-		startBtn.setTexture(startBtnTex);
-		settingsBtn.setTexture(settingsBtnTex);
-		exitBtn.setTexture(exitBtnTex);
+		startButton.setTexture(startBtnTex);
+		settingsButton.setTexture(settingsBtnTex);
+		exitButton.setTexture(exitBtnTex);
 		// Set current to active
 		switch (index)
 		{
 		case 0: // Start button selected
-			startBtn.setTexture(startBtnActiveTex);
+			startButton.setTexture(startBtnActiveTex);
 			break;
 		case 1: // Menu button selected
-			settingsBtn.setTexture(settingsBtnActiveTex);
+			settingsButton.setTexture(settingsBtnActiveTex);
 			break;
 		case 2: // Exit button selected
-			exitBtn.setTexture(exitBtnActiveTex);
+			exitButton.setTexture(exitBtnActiveTex);
 			break;
 		default: break;
 		}
@@ -265,9 +249,9 @@ void SetTextures(int index)
 		startSprites.clear();
 		// Repopulate
 		startSprites.push_back(startBg);
-		startSprites.push_back(startBtn);
-		startSprites.push_back(settingsBtn);
-		startSprites.push_back(exitBtn);
+		startSprites.push_back(startButton);
+		startSprites.push_back(settingsButton);
+		startSprites.push_back(exitButton);
 
 		break;
 	}
@@ -502,9 +486,7 @@ void Collisions()
 				// Erase bullet and ship
 				itB = bulletSprites.erase(itB);
 				itE = slowEnemySprites.erase(itE);
-				// Update kill count
 				killCounter++;
-				killCount.setString(" Kills: " + std::to_string(killCounter));
 				// Chance of powerup drop
 				PowerupChance();
 				// Play explosion sound effect
@@ -525,7 +507,6 @@ void Collisions()
 				itE = fastEnemySprites.erase(itE);
 				// Update kill count
 				killCounter++;
-				killCount.setString(" Kills: " + std::to_string(killCounter));
 				// Chance of powerup
 				PowerupChance();
 				// Play explosion sound effect
@@ -546,7 +527,6 @@ void Collisions()
 				itE = fasterEnemySprites.erase(itE);
 				// Update kill count
 				killCounter++;
-				killCount.setString(" Kills: " + std::to_string(killCounter));
 				// Chance of powerup
 				PowerupChance();
 				// Play explosion sound effect
@@ -726,14 +706,6 @@ void Update()
 		{
 			enemyTick = 0;
 		}
-
-		// Update hud elements
-		// Game time
-		gameTimeTotal += dt;
-		gameTime.setString(std::to_string(gameTimeTotal));
-		// Player lives
-		playerLives.setString("Lives: " + std::to_string(playerLivesCount));
-
 		// Pause game
 		if (Keyboard::isKeyPressed(Keyboard::P) || Joystick::isButtonPressed(controller, 7))
 		{
