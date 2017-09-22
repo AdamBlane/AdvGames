@@ -1,0 +1,3 @@
+For Spilit Screen 
+Glut Download - http://freeglut.sourceforge.net/docs/api.php 
+Lazy Foo Tutorial- http://lazyfoo.net/tutorials/OpenGL/03_the_viewport/index.php
