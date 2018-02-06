@@ -5,7 +5,7 @@
 #include <list>
 #include <cmath>
 #include <fstream>
-
+ 
 
 using namespace sf;
 

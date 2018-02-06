@@ -1,11 +1,10 @@
 ﻿  xXpongXx.cpp
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(117): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(139): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(349): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(349): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(1039): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(1044): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\40161070\documents\github\advgames\xxpongxx\xxpongxx.cpp(1050): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-  xXpongXx.vcxproj -> C:\Users\40161070\Documents\GitHub\AdvGames\x64\Debug\xXpongXx.exe
-  xXpongXx.vcxproj -> C:\Users\40161070\Documents\GitHub\AdvGames\x64\Debug\xXpongXx.pdb (Partial PDB)
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(99): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(118): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(140): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(355): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(355): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(1048): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(1053): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\40161070\documents\github\advgames\first game\xxpongxx\xxpongxx.cpp(1059): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  xXpongXx.vcxproj -> C:\Users\40161070\Documents\GitHub\AdvGames\First Game\x64\Debug\xXpongXx.exe
